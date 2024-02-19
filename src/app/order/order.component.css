@@ -1,0 +1,71 @@
+.container {
+  margin-bottom: 40px;
+}
+
+.full-width-input {
+}
+
+.descbox {
+  width: 500px;
+  height: 200px;
+}
+
+#wrapper {
+    padding-left: 0;
+}
+
+.admin-main {
+  margin-top: 100px;
+}
+
+#page-wrapper {
+    width: 100%;
+    padding: 0;
+    background-color: #fff;
+}
+
+.input-field {
+  width: 100%;
+  max-width: 350px;
+}
+
+.text-field {
+  width: 100%;
+  max-width: 450px;
+}
+
+.import-results-container {
+  height: calc(100vh - 150px);
+  width: calc(100vw - 300px);
+  overflow: scroll;
+}
+
+.pf-checkbox {
+  display: inline-block;
+  padding: 5px 0;
+  width: 50%;
+  height: 20px;
+}
+
+.recommended {
+  border-bottom: 1px solid #EEE;
+}
+
+.recommended-event {
+  list-style: none;
+  display: inline-block;
+  position: relative;
+}
+
+.spaced-bottom-border {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #EEE;
+  margin-bottom: 20px;
+}
+
+.buttons-container {
+  position: relative;
+  z-index: 3;
+  top: 10px;
+  left: 10px;
+}

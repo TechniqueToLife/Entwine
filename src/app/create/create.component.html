@@ -1,0 +1,150 @@
+<div class="col-xs-12 col-md-10 admin-main" *ngIf="currentUser && currentUser.role == 'admin'">
+  <h1>Upload</h1>
+  <form #inputForm="ngForm">
+    <mat-form-field class="full-width-input">
+      <mat-label>Product name</mat-label>
+      <input matInput [(ngModel)]="formData.name" (keydown)="evaluateSubmitStatus()" name="product" placeholder="Product name">
+    </mat-form-field>
+    <br /><br />
+    <mat-form-field class="full-width-input">
+      <mat-label>Product ID</mat-label>
+      <input matInput [disabled]="true" [(ngModel)]="formData.id" (keydown)="evaluateSubmitStatus()" name="product id" placeholder="Product ID">
+    </mat-form-field>
+    <br /><br />
+    <mat-checkbox [(ngModel)]="formData.digital" name="digital">Digital Item?</mat-checkbox>
+    <br /><br />
+    <mat-form-field class="descbox">
+      <mat-label>Description</mat-label>
+      <textarea matInput class="descbox" [(ngModel)]="formData.description" (keydown)="evaluateSubmitStatus()" name="Description" placeholder="Description"></textarea>
+    </mat-form-field>
+    <br /><br />
+    <mat-form-field class="full-width-input">
+    <mat-label>Category</mat-label>
+      <mat-select [(ngModel)]="formData.category" name="category">
+        <mat-option *ngFor="let c of categories" [value]="c.id">{{c.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br /><br />
+    <div class="col-xs-12 col-md-5 spaced-bottom-border">
+      <h1>Upload file</h1>
+      <h5>If you are selling a digital item, upload it here to automatically send it to the customer upon purchase</h5>
+      <span class="bold secondary"></span><br />
+      <label for="file">Select:</label>
+      <input type="file" (change)="uploadFile($event)"/>
+      <mat-progress-spinner color="primary" mode="determinate" [value]="(fileUploadPercent | async)"></mat-progress-spinner>
+    </div>
+    <div class="col-xs-12 col-md-5 spaced-bottom-border">
+      <h1>Upload product image(s)</h1>
+      <span class="bold secondary"></span><br />
+      <label for="file">Select:</label>
+      <input type="file" multiple (change)="uploadImage($event)" accept=".png,.jpg"/>
+      <mat-progress-spinner color="primary" mode="determinate" [value]="(imageUploadPercent | async)"></mat-progress-spinner>
+      <div *ngFor="let url of formData.imageUrls" class="product-thumbnail" [ngStyle]="{'background': '#fff url(' + url + ') repeat 0 0','backgroundSize': 'contain', 'background-position': 'center', 'background-repeat': 'no-repeat'}"><button mat-icon-button aria-label="delete image" (click)="deleteImage(url)"><mat-icon class="delete">delete</mat-icon></button></div>
+    </div>
+    <br /><br /><br />
+    <mat-form-field class="full-width-input" style="outline">
+      <mat-label>File Url</mat-label>
+      <input matInput [disabled]="true" [(ngModel)]="formData.fileUrl" (keydown)="evaluateSubmitStatus()" name="file url" placeholder="File Url">
+      <button matTooltip="Copy" (click)="copyUrl()" matTooltip="{{copyMessage}}" mat-icon-button matSuffix>
+        <mat-icon>content_copy</mat-icon>
+      </button>
+    </mat-form-field>
+    <br /><br />
+    <h1>Item variations</h1>
+    <h4>All item variations will be the same price</h4>
+    <h4><mat-icon style="color:red">warning</mat-icon>&nbsp;Adding / removing variations reset all quantities</h4>
+    <div class="variation-inline">
+    <mat-form-field>
+      <mat-label>Variation name</mat-label>
+      <input matInput [(ngModel)]="formData.variation1Name" name="variation name 1" placeholder="Color, size, etc">
+    </mat-form-field>
+    </div>
+    <div class="variation-inline">
+    <mat-form-field>
+      <mat-label>Variation option</mat-label>
+      <input matInput [(ngModel)]="variation1OptionInput" (keyup.enter)="enterVariationOption(1)" name="variation 1 options" placeholder="Small, medium, etc">
+    </mat-form-field>
+    <button mat-icon-button matTooltip="Add option" aria-label="Add" (click)="enterVariationOption(1)">
+      <mat-icon>add</mat-icon>
+    </button><br />
+    <ul>
+      <li *ngFor="let c of formData.variation1Options" class="variation-option">{{c}}<button mat-icon-button aria-label="delete image" class="delete-varation-button" matTooltip="Delete option" (click)="deleteVariationOption(1,c)"><mat-icon>delete</mat-icon></button></li>
+    </ul>
+    </div>
+    <br /><br />
+    <div class="variation-inline">
+    <mat-form-field>
+      <mat-label>2nd variation name</mat-label>
+      <input matInput [disabled]="!formData.variation1Name || formData.variation1Options.length == 0" [(ngModel)]="formData.variation2Name" name="variation name 2" placeholder="Color, size, etc">
+    </mat-form-field>
+    </div>
+    <div class="variation-inline">
+    <mat-form-field>
+      <mat-label>Variation option</mat-label>
+      <input matInput [disabled]="!formData.variation1Name || formData.variation1Options.length == 0" [(ngModel)]="variation2OptionInput" (keyup.enter)="enterVariationOption(2)" name="variation 2 options" placeholder="Small, medium, etc">
+    </mat-form-field>
+    <button mat-icon-button matTooltip="Add option" aria-label="Add" (click)="enterVariationOption(2)">
+      <mat-icon>add</mat-icon>
+    </button><br />
+    <ul>
+      <li *ngFor="let c of formData.variation2Options" class="variation-option">{{c}}<button mat-icon-button aria-label="delete image" class="delete-varation-button" matTooltip="Delete option" (click)="deleteVariationOption(2,c)"><mat-icon>delete</mat-icon></button></li>
+    </ul>
+    </div>
+    <br /><br />
+    <button mat-raised-button color="accent" [disabled]="!formData.variation1Name || formData.variation1Options.length == 0" (click)="openVariationQuantityView()">Update variation quantities</button>
+    <br /><br />
+    <br /><br />
+
+    <h1>Quantity and price</h1>
+    <mat-form-field class="full-width-input">
+      <mat-label>Price</mat-label>
+      <input matInput [(ngModel)]="formData.price" type="number" (keydown)="evaluateSubmitStatus()" name="price" placeholder="Price">
+      <span matPrefix>$&nbsp;</span>
+    </mat-form-field><br />
+    <mat-form-field class="full-width-input">
+      <mat-label>Quantity</mat-label>
+      <input type="number" [disabled]="formData.variation1Options.length > 0" matInput [(ngModel)]="formData.quantity" (keydown)="evaluateSubmitStatus()" name="Quantity" placeholder="Quantity">
+    </mat-form-field><br />
+    <h4 *ngIf="formData.variation1Name && formData.variation1Options.length > 0"><mat-icon>warning</mat-icon>&nbsp;Use the "Set Variation Quantities" button when item variations are specified</h4>
+    <br /><br />
+    <mat-checkbox [(ngModel)]="formData.uniqueUrl" name="Unique URL">Generate unique download URL?</mat-checkbox>
+    <br /><br />
+    <mat-checkbox [(ngModel)]="formData.featured" name="featured">Front page item?</mat-checkbox>
+    <br /><br />
+    <mat-checkbox [(ngModel)]="formData.archived" name="archived">Archived?</mat-checkbox>
+    <br /><br />
+    <button mat-raised-button color="accent" type="button" (click)="submit()" color="accent" class="checkout-button" [ngClass]="{'mat-loading' : submitting}">
+      <span class="button-text">{{submitText}}</span>
+      <mat-progress-spinner class="mat-progress-spinner" *ngIf="submitting" diameter="20" mode="indeterminate">
+      </mat-progress-spinner>
+    </button>
+  </form>
+</div>
+<ng-template #quantitySetter>
+  <div class="center-content">
+    <h2 matDialogTitle>Set variation quantities</h2>
+    <mat-form-field class="full-width-input">
+    <mat-label>{{formData.variation1Name}}</mat-label>
+      <mat-select [(ngModel)]="selectedVariationOption1" name="variation 1 options">
+        <mat-option *ngFor="let c of formData.variation1Options" [value]="c">{{c}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    &nbsp;&nbsp;
+    <mat-form-field class="full-width-input" *ngIf="formData.variation2Options.length > 0">
+    <mat-label>{{formData.variation2Name}}</mat-label>
+      <mat-select [(ngModel)]="selectedVariationOption2" name="variation 2 options">
+        <mat-option *ngFor="let c of formData.variation2Options" [value]="c">{{c}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    &nbsp;&nbsp;
+    <mat-form-field appearance="outline" *ngIf="selectedVariationOption1">
+      <mat-label>Quantity</mat-label>
+      <input matInput [(ngModel)]="variationQuantities[formData.variation2Options.length > 0 ? selectedVariationOption1 + '+' + selectedVariationOption2 : selectedVariationOption1]" type="number" name="setterInput" placeholder="Quantity">
+    </mat-form-field>
+  </div>
+  <mat-dialog-actions align="center">
+    <button mat-stroked-button color="primary" (click)="saveVariationQuantities()">Save</button>
+    <button mat-stroked-button color="warn" (click)="closeQuantitySetter()">Close (Changes will not save)</button>
+  </mat-dialog-actions>
+  <br /><br /><br />
+</ng-template>

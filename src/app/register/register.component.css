@@ -1,0 +1,53 @@
+.register-container {
+  text-align: center;
+  margin: 50px 0;
+}
+
+.fullfield {
+  width: 100%;
+  max-width: 360px;
+  margin-top: 20px;
+}
+
+.doublefield {
+  width: 100%;
+  max-width: 360px;
+  margin: 20px auto;
+
+}
+
+.firstnamefield {
+  width: 47%;
+  max-width: 170px;
+  margin-right: 6%;
+}
+
+.register-button {
+  color: #FEFEFE;
+  background-color: #3a8f31;
+}
+
+.lastnamefield {
+  width: 47%;
+  max-width: 170px;
+}
+
+.registration-status {
+  font-weight: bold;
+}
+
+.recaptcha-container {
+  margin: 0 auto;
+  text-align: center;
+  width: 305px;
+  height: 78px;
+}
+
+.check {
+  background : url('/assets/check.png');
+  background-position: center;
+  background-size: contain;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto;
+}

@@ -1,0 +1,111 @@
+.full-width-input {
+}
+
+.descbox {
+  width: 500px;
+  height: 200px;
+}
+
+#wrapper {
+    padding-left: 0;
+}
+
+.admin-main {
+  margin-top: 100px;
+}
+
+#page-wrapper {
+    width: 100%;
+    padding: 0;
+    background-color: #fff;
+}
+
+.input-field {
+  width: 100%;
+  max-width: 350px;
+}
+
+.text-field {
+  width: 100%;
+  max-width: 450px;
+}
+
+.import-results-container {
+  height: calc(100vh - 150px);
+  width: calc(100vw - 300px);
+  overflow: scroll;
+}
+
+.pf-checkbox {
+  display: inline-block;
+  padding: 5px 0;
+  width: 50%;
+  height: 20px;
+}
+
+.variation-inline {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 20px;
+}
+
+.variation-option {
+  width: 100%;
+  min-width: 100%;
+  list-style: none;
+  height: 40px;
+  line-height: 40px;
+  position: relative;
+}
+
+.delete-varation-button {
+  position: absolute;
+  right: 0;
+}
+
+.recommended {
+  border-bottom: 1px solid #EEE;
+}
+
+.recommended-event {
+  list-style: none;
+  display: inline-block;
+  position: relative;
+}
+
+.spaced-bottom-border {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #EEE;
+  margin-bottom: 20px;
+}
+
+.buttons-container {
+  position: relative;
+  z-index: 3;
+  top: 10px;
+  left: 10px;
+}
+
+.product-thumbnail {
+  width: 100px;
+  height: 100px;
+  display: inline-block;
+  margin: 1px;
+  position: relative;
+}
+
+.product-thumbnail:hover::after {
+    content: '\A';
+    position: absolute;
+    width: 100%; height:100%;
+    top:0; left:0;
+    background:rgba(0,0,0,0.6);
+    opacity: 0;
+    transition: all 1s;
+    -webkit-transition: all 1s;
+}
+
+.delete {
+  color: #FFF !important;
+  text-shadow: #000 0 0 8px;
+}

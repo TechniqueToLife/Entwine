@@ -1,0 +1,68 @@
+<!-- Navigation -->
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="logo">
+      <a routerLink="/"><img src="../assets/logo_admin.png" height="40px"/></a>
+    </div>
+        <ul class="nav navbar-right top-nav">
+            <!-- <li><a href="#" data-placement="bottom" data-toggle="tooltip" href="#" data-original-title="Stats"><i class="fa fa-bar-chart-o" aria-hidden="true"></i>
+                </a>
+            </li> -->
+            <li class="dropdown">
+              <button mat-button [matMenuTriggerFor]="belowMenu">Welcome, {{currentUser.firstName}}&nbsp;&nbsp;<i class="fa fa-user" aria-hidden="true"></i></button>
+              <mat-menu class="nav-dropdown" #belowMenu="matMenu" yPosition="below">
+                <button mat-menu-item (click)="home()">Home</button>
+                <button mat-menu-item>{{currentUser.role == 'admin' ? "Admin Home" : "Provider Admin Home"}}</button>
+                <button mat-menu-item (click)="logout()">Logout</button>
+              </mat-menu>
+            </li>
+        </ul>
+        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+        <div class="sidebar-container">
+
+            <ul class="nav navbar-nav side-nav">
+              <a routerLink="/admin"><div class="admin-sidebar-link no-expand"><span class="material-icons vertical-align">
+home
+</span><span class="vertical-align">Admin Home</span>&nbsp;</div></a>
+              <mat-expansion-panel [expanded]="true" class="sidebar-expandable">
+                <mat-expansion-panel-header class="header">
+                  <mat-panel-title>
+                    Admin
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <a routerLink="/create"><div class="admin-sidebar-link">Add product</div></a>
+                <a routerLink="/pl"><div class="admin-sidebar-link">All product</div></a>
+                <a routerLink="/cl"><div class="admin-sidebar-link">Categories</div></a>
+                <a routerLink="/categoryadmin"><div class="admin-sidebar-link">Create category</div></a>
+                <a routerLink="/sa"><div class="admin-sidebar-link">Shipping Options</div></a>
+
+              </mat-expansion-panel>
+              <mat-expansion-panel *ngIf="currentUser.role == 'admin'" [expanded]="true" class="sidebar-expandable">
+                <mat-expansion-panel-header class="header">
+                  <mat-panel-title>
+                    User Statistics
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <a routerLink="/ul"><div class="admin-sidebar-link">User Statistics</div></a>
+              </mat-expansion-panel>
+              <mat-expansion-panel *ngIf="currentUser.role == 'admin'" [expanded]="true" class="sidebar-expandable">
+                <mat-expansion-panel-header class="header">
+                  <mat-panel-title>
+                    Orders
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <a routerLink="/ol"><div class="admin-sidebar-link">All orders</div></a>
+              </mat-expansion-panel>
+              <mat-expansion-panel [expanded]="true" class="sidebar-expandable">
+                <mat-expansion-panel-header class="header">
+                  <mat-panel-title>
+                    Support
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <a *ngIf="currentUser.role == 'admin'" routerLink="/requestlog"><div class="admin-sidebar-link">Request log</div></a>
+                <a *ngIf="currentUser.role == 'admin'" routerLink="/errorlog"><div class="admin-sidebar-link">Error log</div></a>
+                <!-- <a *ngIf="currentUser.role != 'admin'" routerLink="/errorlog"><div class="admin-sidebar-link">Contact Admin</div></a> -->
+              </mat-expansion-panel>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </nav>

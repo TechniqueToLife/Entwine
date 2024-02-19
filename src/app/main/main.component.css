@@ -1,0 +1,24 @@
+.product-list {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.fullwidth {
+  width: 100vw;
+  display: block;
+}
+
+.product-image {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.category-link {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.category-list-container li:not(:last-child)::after {
+  content: " | ";
+}

@@ -1,0 +1,135 @@
+<div class="container-fluid" *ngIf="currentUser">
+  <div class="row">
+    <div class="col-xs-12 col-md-8">
+      <div class="payment-container">
+        <h1>Checkout</h1><br /><br />
+        <h2 *ngIf="expressCheckoutEnabled">Express checkout</h2>
+        <div #applePayButton id="payment-request-button">
+          <!-- A Stripe Element will be inserted here. -->
+        </div>
+        <div *ngIf="expressCheckoutEnabled" class="line"></div>
+        <div *ngIf="expressCheckoutEnabled" class="small-spacer"></div>
+      <h2>Payment Information</h2>
+      <label for="card-info"></label><br /><br />
+      <div *ngIf="!paymentMethodsLoaded" class="center-content"><mat-progress-spinner mode="indeterminate" color="primary"></mat-progress-spinner></div>
+        <mat-radio-group [(ngModel)]="selectedCard" (ngModelChange)="evaluateSelectedCard()" class="card-radio-group">
+          <h3 *ngIf="cards.length > 0 ">Wallet</h3>
+          <mat-radio-button color="primary" *ngFor="let c of cards" [value]="c.id" class="card-radio-button">
+            <div class="card-meta">
+              <img src="/assets/cards/{{c.brand.toLowerCase()}}.png" height="20px">&nbsp;{{c.brand}} - {{c.last4}}<br />
+              {{c.expiration}}
+            </div>
+            <div class="delete-button">
+              <button mat-button color="warn" (click)="deleteCard(c)">Delete</button>
+            </div>
+          </mat-radio-button>
+      <form class="checkout">
+        <mat-radio-button color="primary" [value]="'newCard'" class="card-radio-button"><h4>Use new card</h4>
+        </mat-radio-button>
+        <div id="form-field" (click)="setToNewCard()">
+              <div id="card-info" #cardInfo></div><br />
+              <img src="/assets/cards/visa.png" height="20px" class="card-image">
+              <img src="/assets/cards/american express.png" height="20px" class="card-image">
+              <img src="/assets/cards/mastercard.png" height="20px" class="card-image">
+              <img src="/assets/cards/discover.png" height="20px" class="card-image">
+              <br /><br />
+              <!-- <mat-checkbox [(ngModel)]="saveCard" [ngModelOptions]="{standalone : true}">Set as default card</mat-checkbox> -->
+              <br /><br />
+              <mat-error id="card-errors" role="alert" *ngIf="cardError">
+                  <mat-icon style="color: #f44336">cancel</mat-icon>
+                  &nbsp;{{ cardError }}
+              </mat-error>
+          </div>
+      </form>
+
+    </mat-radio-group>
+    <form #inputForm="ngForm" autocomplete="on">
+      <div class="line"></div>
+      <div *ngIf="orderType == 'physical' || this.orderType == 'mixed'">
+      <h2>Shipping</h2>
+        <mat-radio-group [(ngModel)]="selectedShippingOption" (ngModelChange)="updateSelectedShippingOption()" name="shipping" aria-label="Shipping">
+          <mat-radio-button color="primary" *ngFor="let s of shippingOptions" class="shipping-option" [value]="s" [name]="s.label"><i class="fa fa-truck" aria-hidden="true"></i>&nbsp;{{s.label}}<br /><span class="strong">${{(s.amount! * 0.01).toFixed(2)}}</span></mat-radio-button>
+        </mat-radio-group>
+
+        <div class="line"></div>
+        </div>
+        <h2>Billing Profile</h2>
+        <mat-form-field appearance="outline" class="inline first-name">
+          <mat-label>First Name</mat-label>
+          <input matInput autocomplete="given-name" [(ngModel)]="billingData.firstName" (ngModelChange)="evaluateSubmitStatus()" name="first name" placeholder="First Name">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="inline last-name">
+          <mat-label>Last Name</mat-label>
+          <input matInput autocomplete="family-name" [(ngModel)]="billingData.lastName" (ngModelChange)="evaluateSubmitStatus()" name="last name" placeholder="Last Name">
+        </mat-form-field><br />
+        <mat-form-field class="input-field" appearance="outline">
+          <mat-label>Address</mat-label>
+          <input matInput autocomplete="street-address" [(ngModel)]="billingData.address1" (ngModelChange)="evaluateSubmitStatus()" name="street-address" placeholder="Address">
+        </mat-form-field><br />
+        <mat-form-field class="input-field" appearance="outline">
+          <mat-label>Apartment / Suite / Etc (optional)</mat-label>
+          <input matInput [(ngModel)]="billingData.address2" (ngModelChange)="evaluateSubmitStatus()" name="address2" placeholder="Apartment / Suite / Etc (optional)">
+        </mat-form-field><br />
+        <mat-form-field class="input-field" appearance="outline">
+          <mat-label>City</mat-label>
+          <input matInput autocomplete="address-level2" [(ngModel)]="billingData.city" (ngModelChange)="evaluateSubmitStatus()" name="city" placeholder="City">
+        </mat-form-field><br />
+        <mat-form-field appearance="outline" class="inline first-name">
+          <mat-label>Postal Code</mat-label>
+          <input matInput autocomplete="postal-code" [(ngModel)]="billingData.zipCode" (ngModelChange)="evaluateSubmitStatus()" name="zip code" placeholder="Postal Code">
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="inline last-name">
+          <mat-label>State</mat-label>
+          <mat-select [(ngModel)]="billingData.state" (ngModelChange)="evaluateSubmitStatus()" name="state">
+            <mat-option *ngFor="let s of states" [value]="s">{{s}}</mat-option>
+          </mat-select>
+        </mat-form-field><br />
+        <mat-form-field class="input-field" appearance="outline">
+          <mat-label>Phone Number</mat-label>
+          <input matInput autocomplete="tel-national" [(ngModel)]="billingData.phoneNumber" (ngModelChange)="evaluateSubmitStatus()" name="phone number" placeholder="(000)-000-0000">
+        </mat-form-field><br /><br />
+        <mat-form-field appearance="outline" class="input-field">
+          <mat-label>Email</mat-label>
+          <input matInput [(ngModel)]="emailText" (ngModelChange)="evaluateSubmitStatus()" [formControl]="email" required placeholder="email@example.com" name="email" required type="email">
+          <mat-error *ngIf="email.invalid">{{getEmailError()}}</mat-error>
+        </mat-form-field><br /><br />
+        <div class="center-content">
+          <button mat-flat-button [disabled]="checkoutInProgress || !submitEnabled || noItems" color="primary" class="checkout-button" (click)="submitPayment()" [ngClass]="{'mat-loading' : checkoutInProgress}">
+            <span class="button-text">Complete Payment</span>
+            <mat-progress-spinner class="mat-progress-spinner" *ngIf="checkoutInProgress" diameter="20" mode="indeterminate">
+            </mat-progress-spinner>
+          </button>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         </div>
+      </form>
+    </div>
+    </div>
+    <div class="col-xs-12 col-md-4 items-container">
+      <h2>Your items</h2>
+      <div *ngIf="!itemsLoaded" class="center-content"><mat-progress-spinner mode="indeterminate" color="primary"></mat-progress-spinner></div>
+      <ul *ngIf="itemsLoaded" class="cart-items">
+        <li *ngFor="let item of items" class="storeitem">
+          <div class="item-thumbnail inline v-top" [ngStyle]="{'background': '#fff url(' + item.imageUrl + ') no-repeat 0 0','backgroundSize': 'contain', 'background-position': 'center'}"></div>
+          <div class="inline v-top">
+          <span class="bold">{{item.name}}</span><br /><br />
+          {{item.description}}<br /><br />
+          <div *ngIf="item.selectedVariation">
+            <span class="bold">{{item.variation1Name}}:</span><span>&nbsp;{{item.selectedVariation.split("+")[0]}}</span>
+            <br />
+            <span *ngIf="item.variation2Name" class="bold">{{item.variation2Name}}:</span><span *ngIf="item.variation2Name">&nbsp;{{item.selectedVariation.split("+")[1]}}</span>
+          </div>
+          <br /><br />
+          <strong>Quantity:</strong> &nbsp; {{item.cartQuantity}}<br /><br />
+          <span class="bold">${{((item.price! * 0.01) * item.cartQuantity!).toFixed(2)}}  </span>
+          </div>
+          <div class="line"></div>
+        </li>
+        <li *ngIf="noItems" class="storeitem">
+          <span class="bold">There are no items in your cart</span><br /><br />
+        </li>
+      </ul>
+      <h3 *ngIf="shippingTotal != 0">Shipping: ${{(shippingTotal * 0.01).toFixed(2)}}</h3>
+      <h3>Total: ${{((total + shippingTotal) * 0.01).toFixed(2)}}</h3>
+    </div>
+  </div>
+</div>

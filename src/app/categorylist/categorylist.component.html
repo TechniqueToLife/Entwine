@@ -1,0 +1,67 @@
+
+<div class="col-xs-12 col-md-12 admin-main">
+  <h1>All categories</h1>
+  <form #inputForm="ngForm">
+  <mat-form-field class="field-input">
+    <mat-label>Category name</mat-label>
+    <input matInput [(ngModel)]="searchNameParam" (ngModelChange)="searchCategoriesAutocomplete()" placeholder="Category name" name="Category name" [matAutocomplete]="auto">
+  </mat-form-field>
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let p of autocompletecategories" [value]="p.name" (click)="selectCategory(p)">
+      {{p.name}}
+    </mat-option>
+  </mat-autocomplete>
+  &nbsp;&nbsp;
+  <!-- <mat-form-field>
+    <mat-label>Near Zip Code</mat-label>
+    <input matInput [(ngModel)]="zipCodeParam" placeholder="Near zip code" name="Zip code">
+  </mat-form-field> -->
+  <button mat-button color="primary" type="submit" (click)="search()">Search</button>
+  </form>
+  <table mat-table [dataSource]="categories">
+
+    <ng-container matColumnDef="categoryId">
+      <th mat-header-cell *matHeaderCellDef class="head-cell" > ID &nbsp;<button class="nostyle inline"><span class="material-icons">
+expand_more
+</span></button></th>
+      <td mat-cell *matCellDef="let item" class="cell" > <a routerLink="/categoryadmin/{{item.id}}">{{item.id}}</a> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="categoryName">
+      <th mat-header-cell *matHeaderCellDef class="head-cell" > Category Name &nbsp;<button class="nostyle inline"><span class="material-icons">
+expand_more
+</span></button></th>
+      <td mat-cell *matCellDef="let item" class="cell" ><a routerLink="/categoryadmin/{{item.id}}">{{item.name}}</a></td>
+    </ng-container>
+
+    <ng-container matColumnDef="category">
+      <th mat-header-cell *matHeaderCellDef class="head-cell" > Category &nbsp;<button class="nostyle inline"><span class="material-icons">
+expand_more
+</span></button></th>
+      <td mat-cell *matCellDef="let item" class="cell" > {{item.category}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="uniqueUrl">
+      <th mat-header-cell *matHeaderCellDef class="head-cell" > Top level?<br /><mat-checkbox [(ngModel)]="topLevel" (ngModelChange)="toggleTopLevel()">Required?</mat-checkbox></th>
+      <td mat-cell *matCellDef="let item" class="cell" > {{item.parentCategory}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="archived">
+      <th mat-header-cell *matHeaderCellDef class="head-cell" > Active?<br /><mat-checkbox [(ngModel)]="active" (ngModelChange)="toggleActiveReq()">Required?</mat-checkbox></th>
+      <td mat-cell *matCellDef="let item" class="cell" > {{item.archived}} </td>
+    </ng-container>
+
+  	<!-- <ng-container matColumnDef="delete">
+  		<th mat-header-cell *matHeaderCellDef> </th>
+  		<td mat-cell *matCellDef="let item">
+  			<button type="button" (click)="delete(item)">Delete</button>
+  		</td>
+  	</ng-container> -->
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+  <button mat-button (click)="loadPreviouscategories()">Previous</button>
+  <button mat-button (click)="loadNextcategories()">Next</button>
+  </div>

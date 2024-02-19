@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "rome-495ce": {
+      "hosting": {
+        "romelatest": [
+          "rome-495ce"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "rome-495ce"
+  }
+}

@@ -1,0 +1,46 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12 header">
+      <div class="header-left">
+        <button mat-button color="primary" routerLink="/" >Home</button>
+      </div>
+        <div class="header-right">
+          <form #inputForm="ngForm" class="vertical-align">
+            <mat-form-field [ngClass]="{'search-field-input-extended' : searching}" class="search-field-input none nohover no-underline vertical-align">
+              <mat-label>Search</mat-label>
+              <input matInput #searchBox [(ngModel)]="searchNameParam" (ngModelChange)="searchProductsAutocomplete()" placeholder="Item name" name="Search" [matAutocomplete]="auto">
+            </mat-form-field>
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let p of autocompleteproducts" [value]="p.name" (click)="selectProduct(p)" class="search-item">
+                <div class="search-image" [ngStyle]="{'background': '#fff url(' + p.imageUrl + ') repeat 0 0','backgroundSize': 'contain', 'background-position': 'center', 'background-repeat': 'no-repeat'}"></div><div class="search-name">{{p.name}}</div>
+              </mat-option>
+            </mat-autocomplete>
+          </form>
+          <button mat-icon-button aria-label="Search" (click)="searchToggle()" >
+            <mat-icon>search</mat-icon>
+          </button>
+          <div *ngIf="!user" class="same-row  d-none d-lg-inline ">
+            <button mat-button color="primary" (click)="login()">Sign In</button>&nbsp;&nbsp;
+          </div>
+          <div *ngIf="!user" class="same-row  d-inline d-lg-none ">
+            <button mat-icon-button aria-label="Sign in" (click)="login()"><mat-icon>person</mat-icon></button>&nbsp;
+          </div>
+        <li class="dropdown same-row">
+          <button *ngIf="user" mat-icon-button [matMenuTriggerFor]="belowMenu" class="nav-top-button nav-top-button d-inline d-lg-none"><mat-icon>person</mat-icon></button>
+          <button *ngIf="user" mat-button [matMenuTriggerFor]="belowMenu" class="nav-top-button right-margin-10 d-none d-lg-inline">My Account&nbsp;<i class="fa fa-user" aria-hidden="true"></i></button>
+          <mat-menu class="nav-dropdown" #belowMenu="matMenu" yPosition="below">
+            <button *ngIf="user" class="profile-button" mat-menu-item (click)="gotoSettings()"><div class="profile-image" [ngStyle]="{'background': '#fff url(' + user.profileImageUrl + ') repeat 0 0','backgroundSize': 'cover', 'background-position': 'center'}"></div><div class="profile-text"><span>Welcome, {{user.firstName}}<br /></span><span class="bold"><br />Account Settings</span></div></button>
+            <button class="wide-menu" mat-menu-item routerLink="/inbox"><span class="bold">Orders</span></button>
+            <button *ngIf="user && user.role == 'admin'" class="wide-menu" mat-menu-item (click)="gotoAdmin()"><span class="bold">Admin</span></button>
+            <button class="wide-menu" mat-menu-item (click)="logout()"><span class="bold">Logout</span></button>
+          </mat-menu>
+        </li>
+        <button mat-icon-button aria-label="Bag" (click)="gotoBag()" >
+          <mat-icon>shopping_cart</mat-icon><div *ngIf="bagCount != 0" class="cart-badge">{{bagCount}}</div>
+        </button>
+        <!-- <div class="visible-xs-inline visible-sm-inline visible-md-inline"> -->
+
+      </div>
+    </div>
+  </div>
+</div>

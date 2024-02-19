@@ -1,0 +1,144 @@
+.checkout-container {
+}
+
+.payment-container {
+  max-width: calc(100% - 100px);
+  padding: 70px 50px;
+}
+
+.items-container {
+  max-width: calc(100% - 60px);
+  padding: 70px 30px;
+  background-color: #F9F9F9;
+  border-left: 1px solid #EDEDED;
+}
+
+.card-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.card-radio-button {
+  margin-left: 5px;
+  margin-bottom: 20px;
+}
+
+.item-thumbnail {
+  border: 1px solid #EFEFEF;
+  border-radius: 7px;
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+}
+#form-field {
+  margin-left: 30px;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.storeitem {
+  list-style: none;
+  margin-bottom: 25px;
+}
+.v-middle {
+  vertical-align: middle;
+}
+
+.v-top {
+  vertical-align: top;
+}
+
+.first-name {
+  width: calc(40% - 10px);
+  min-width: 100px;
+  max-width: 230px;
+}
+
+.last-name {
+  margin-left: 20px;
+  width: calc(40% - 10px);
+  min-width: 100px;
+  max-width: 230px;
+}
+
+.input-field {
+  width: 80%;
+  min-width: 240px;
+  max-width: 480px;
+}
+
+.checkout-button {
+  padding: 10px 20px;
+}
+
+.line {
+  margin: 20px auto;
+  width: 80%;
+  border-top: 1px solid rgba(0, 0, 0, 0.3);;
+}
+
+#card-info {
+  width: 80%;
+  max-width: 500px;
+  background-color: #F9F9F9;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.card-image {
+  margin-right: 15px;
+}
+
+.cart-items {
+  padding-left: 10px;
+}
+
+.card-meta {
+  display: inline-block;
+  width: 240px;
+  margin-right: 10px;
+}
+
+.delete-button {
+  display: inline-block;
+  width: 80px;
+  float: right;
+}
+
+.shipping-option {
+  display: block;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+
+  .first-name {
+    width: calc(50% - 10px);
+    max-width: calc(50% - 10px);
+  }
+
+  .last-name {
+    width: calc(50% - 10px);
+    max-width: calc(50% - 10px);
+  }
+
+  .input-field {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .payment-container {
+    max-width: calc(100% - 20px);
+    padding: 70px 10px;
+  }
+
+  .items-container {
+    max-width: calc(100% - 20px);
+    padding: 70px 10px;
+  }
+
+
+}

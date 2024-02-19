@@ -1,0 +1,49 @@
+<div class="col-xs-12 col-md-10 container">
+  <h1>Order</h1>
+  Order placed: <b>{{orderDate}}</b>
+  <br /><br />
+  <br /><br />
+  <form #inputForm="ngForm">
+    <mat-form-field class="full-width-input" style="outline">
+      <mat-label>Order Id</mat-label>
+      <input matInput [disabled]="true" [(ngModel)]="order.id" (keydown)="evaluateSubmitStatus()" name="order id" placeholder="Order Id">
+      <button matTooltip="Copy" (click)="copyId()" matTooltip="{{copyMessage}}" mat-icon-button matSuffix>
+        <mat-icon>content_copy</mat-icon>
+      </button>
+    </mat-form-field>
+    <br /><br />
+    <mat-form-field class="full-width-input" style="outline">
+      <mat-label>Invoice Id</mat-label>
+      <input matInput [disabled]="true" [(ngModel)]="order.invoiceId" (keydown)="evaluateSubmitStatus()" name="invoice id" placeholder="Invoice Id">
+      <button matTooltip="Copy" (click)="copyInvoiceId()" matTooltip="{{copyInvoiceMessage}}" mat-icon-button matSuffix>
+        <mat-icon>content_copy</mat-icon>
+      </button>
+    </mat-form-field>
+    <div *ngIf="!itemsLoaded" class="center-content"><mat-progress-spinner mode="indeterminate" color="primary"></mat-progress-spinner></div>
+    <br /><br /><h1>Items</h1>
+    <ul *ngIf="itemsLoaded" class="cart-items">
+      <li *ngFor="let i of items">
+        <a routerLink="/p/{{i.id}}">{{i.name}}</a>
+      </li>
+    </ul>
+    <br /><br />
+    <h1>Order total</h1>
+    ${{(order.total * 0.01).toFixed(2)}}
+    <br /><br />
+    <h1>Payment method</h1>
+    <img *ngIf="cardBrand.length != 0" src="/assets/cards/{{cardBrand.toLowerCase()}}.png" height="20px">&nbsp;<b>{{cardBrand}}</b> - {{last4}}<br />
+    <b>Expiration:</b> {{expiration}}
+    <br /><br /><h1>Request Refund</h1>
+    <button mat-button color="warn" (click)="refundOrderButtonTapped()">Request Refund</button>
+  </form>
+</div>
+<ng-template #refundDialog>
+  <div class="center-content"><h2 matDialogTitle>Request Refund</h2>
+  <div matDialogContent class="check"></div>
+  Refund order <b>{{order.id}}</b>?<br />This cannot be undone</div>
+  <mat-dialog-actions align="center">
+    <button mat-button color="warn" (click)="refundOrder()">Refund order</button>
+    <button mat-button color="primary" (click)="dismissDialog()">Dismiss</button>
+  </mat-dialog-actions>
+  <br /><br /><br />
+</ng-template>

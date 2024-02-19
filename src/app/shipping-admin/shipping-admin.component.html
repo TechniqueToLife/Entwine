@@ -1,0 +1,67 @@
+<div class="col-xs-12 col-md-10 admin-main" *ngIf="currentUser && currentUser.role == 'admin'">
+  <h1>Shipping options</h1>
+  <form #inputForm="ngForm">
+    <ul>
+      <li *ngFor="let o of shippingOptions">
+      <mat-form-field class="full-width-input">
+        <mat-label>Option ID</mat-label>
+        <input matInput disabled [(ngModel)]="o.id" (keydown)="evaluateSubmitStatus()" [name]="'id for ' + o.id" placeholder="Ground, expedited, etc">
+      </mat-form-field>
+      <br /><br />
+      <mat-form-field class="full-width-input">
+        <mat-label>Option Label</mat-label>
+        <input matInput [(ngModel)]="o.label" (keydown)="evaluateSubmitStatus()" [name]="o.id + ' label'" placeholder="Ground Shipping, etc">
+        <mat-hint>This is the name of the shipping option that the user will see</mat-hint>
+      </mat-form-field>
+      <br /><br />
+      <mat-form-field class="full-width-input">
+        <mat-label>Description</mat-label>
+        <input matInput [(ngModel)]="o.detail" (keydown)="evaluateSubmitStatus()" [name]="o.id + ' description'" placeholder="Description">
+      </mat-form-field>
+      <br /><br />
+      <mat-form-field class="full-width-input">
+        <mat-label>Cost</mat-label>
+        <span matPrefix>$&nbsp;</span>
+        <input matInput [(ngModel)]="o.amount" (keydown)="evaluateSubmitStatus()" type="number" [name]="o.id + ' cost'" placeholder="Shipping cost">
+      </mat-form-field>
+      <br /><br />
+      <button mat-raised-button color="accent" (click)="updateShippingOption(o)">Update</button>
+      <br /><br />
+      <br /><br />
+
+      </li>
+
+
+
+
+      <span *ngIf="shippingOptions.length == 0"><mat-icon>warning</mat-icon>&nbsp;No shipping options<br /><br /></span>
+      <h1>Enter new shipping option</h1>
+      <li>
+      <mat-form-field class="full-width-input">
+        <mat-label>Option ID</mat-label>
+        <input matInput [(ngModel)]="newOption.id" (keydown)="evaluateSubmitStatus()" name="new option id" placeholder="Ground, expedited, etc">
+        <mat-hint style="color:#DD0000"><mat-icon>warning</mat-icon>&nbsp;Once submitted, this can not be edited</mat-hint>
+      </mat-form-field>
+      <br /><br />
+      <mat-form-field class="full-width-input">
+        <mat-label>Option Label</mat-label>
+        <input matInput [(ngModel)]="newOption.label" (keydown)="evaluateSubmitStatus()" name="new option label" placeholder="Ground Shipping, etc">
+        <mat-hint>This is the name of the shipping option that the user will see</mat-hint>
+      </mat-form-field>
+      <br /><br />
+      <mat-form-field class="full-width-input">
+        <mat-label>Description</mat-label>
+        <input matInput [(ngModel)]="newOption.detail" (keydown)="evaluateSubmitStatus()" name="new option description" placeholder="Description">
+      </mat-form-field>
+      <br /><br />
+      <mat-form-field class="full-width-input">
+        <mat-label>Cost</mat-label>
+        <span matPrefix>$&nbsp;</span>
+        <input matInput [(ngModel)]="newOption.amount" (keydown)="evaluateSubmitStatus()" type="number" name="new option cost" placeholder="Shipping cost">
+      </mat-form-field>
+      <br /><br />
+      <button mat-raised-button color="accent" (click)="submit()">Submit</button>
+      </li>
+    </ul>
+  </form>
+</div>

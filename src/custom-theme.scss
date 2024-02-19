@@ -1,0 +1,102 @@
+@use '@angular/material' as mat;
+@include mat.core();
+$bright-navy-blue-palette: (
+    50 : #fffae8,
+    100 : #fff2c7,
+    200 : #ffeba3,
+    300 : #ffe380,
+    400 : #ffdc67,
+    500 : #ffd64f,
+    600 : #fbc54b,
+    700 : #e4b045,
+    800 : #cd9a40,
+    900 : #a67637,
+    A100 : #7669ff,
+    A200 : #4836ff,
+    A400 : #1a03ff,
+    A700 : #1500e8,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #ffffff,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+$gainsboro-palette: (
+    50 : #f9fafc,
+    100 : #f1f3f7,
+    200 : #e8ecf2,
+    300 : #dfe4ed,
+    400 : #d8dee9,
+    500 : #d1d8e5,
+    600 : #ccd4e2,
+    700 : #c6cede,
+    800 : #c0c8da,
+    900 : #b5bfd3,
+    A100 : #ffffff,
+    A200 : #ffffff,
+    A400 : #ffffff,
+    A700 : #ffffff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+$crimson-palette: (
+  50: #ffebef,
+  100: #ffcdc5,
+  200: #f0999f,
+  300: #e77179,
+  400: #f24e58,
+  500: #f83a40,
+  600: #e9313e,
+  700: #d72638,
+  800: #ca1e30,
+  900: #bb0d24,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
+$bluesky-primary: mat.define-palette($bright-navy-blue-palette, 700, 300, 900);
+$bluesky-accent: mat.define-palette($gainsboro-palette, 300, 100, 500);
+$bluesky-warn: mat.define-palette($crimson-palette, 700);
+$bluesky-theme: mat.define-light-theme((
+  color: (
+    primary: $bluesky-primary,
+    accent: $bluesky-accent,
+    warn: $bluesky-warn,
+  )
+));
+@include mat.all-component-themes($bluesky-theme);
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

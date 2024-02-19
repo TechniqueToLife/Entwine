@@ -1,0 +1,66 @@
+<div class="container-fluid g-0">
+<div class="row justify-content-center">
+  <div class="col-xs-12 col-md-6 register-container">
+    <h1>Register</h1>
+
+    <form #loginForm="ngForm">
+      <mat-form-field appearance="outline" class="fullfield">
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="emailText" (ngModelChange)="checkValidForm()" [formControl]="email" required placeholder="email@example.com" name="email" required type="email">
+        <mat-error *ngIf="email.invalid">{{getEmailError()}}</mat-error>
+      </mat-form-field><br />
+      <mat-form-field appearance="outline" class="fullfield">
+        <mat-label>Password</mat-label>
+        <input matInput [(ngModel)]="passwordText" (ngModelChange)="checkValidForm()" [formControl]="password" placeholder="Password" name="password" required [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="password.invalid">{{getPasswordError()}}</mat-error>
+      </mat-form-field><br />
+      <mat-form-field appearance="outline" class="fullfield">
+        <mat-label>Verify password</mat-label>
+        <input matInput [(ngModel)]="passwordTextVerify" (ngModelChange)="checkValidForm()" placeholder="Verify password" [formControl]="passwordVerify" name="verify password" required [type]="hide ? 'password' : 'text'">
+      </mat-form-field><br />
+      <div class="doublefield">
+      <mat-form-field appearance="outline" class="firstnamefield">
+        <mat-label>First Name</mat-label>
+        <input matInput [(ngModel)]="firstName" (ngModelChange)="checkValidForm()" placeholder="First Name" name="firstname" required>
+        <!-- <mat-hint>No password necessary for trial users</mat-hint> -->
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="lastnamefield">
+        <mat-label>Last Name</mat-label>
+        <input matInput [(ngModel)]="lastName" (ngModelChange)="checkValidForm()" placeholder="Last Name" name="lastname" required>
+        <!-- <mat-hint>No password necessary for trial users</mat-hint> -->
+      </mat-form-field>
+      </div>
+            <mat-form-field appearance="outline" class="fullfield">
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="emailText" (ngModelChange)="checkValidForm()" [formControl]="email" required placeholder="email@example.com" name="email" required type="email">
+        <mat-hint *ngIf="email.invalid">*Optional</mat-hint>
+      </mat-form-field><br />
+      <!-- <h4>License Type*</h4> -->
+       <br /><br />
+      <!-- <div class="recaptcha-container" [formGroup]="reactiveManualForm"> -->
+        <!-- <re-captcha formControlName="recaptchaManualReactive" siteKey="6LfAR3saAAAAAMmJKLYli_1A-XbpnH6NE3TPOlTk"></re-captcha> -->
+      <!-- </div> -->
+      <!-- <br /><br /> -->
+      <button mat-raised-button color="accent" type="button" (click)="register()" [disabled]="!validInput || registering" color="accent" class="checkout-button" [ngClass]="{'mat-loading' : registering}">
+        <span class="button-text">Register</span>
+        <mat-progress-spinner class="mat-progress-spinner" *ngIf="registering" diameter="20" mode="indeterminate">
+        </mat-progress-spinner>
+      </button>
+    </form>
+  </div>
+</div>
+</div>
+<!-- <ng-template #registrationDialog>
+  <div class="center-content"><h2 matDialogTitle>Registration Complete</h2></div>
+  <div matDialogContent class="check"></div>
+      <div class="center-content"><h2>Thank you</h2>
+      <br /><br />Welcome to our community of CEViewers!  Lifelong learners within the life-changing field of Mental Health. Enjoy full access to all the features and don't forget to <a routerLink="/providers">Write a Review</a> to share a recent training experience! </div><br /><br />
+  <mat-dialog-actions align="center">
+    <button mat-raised-button (click)="dismissRegistrationModal()">Continue</button>
+  </mat-dialog-actions>
+  <br /><br /><br />
+</ng-template> -->

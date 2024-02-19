@@ -1,0 +1,23 @@
+<div class="container-fluid" *ngIf="item">
+  <div class="row cart-preview-container">
+    <div class="col-xs12">
+      <h1>Added to cart</h1><br />
+      <div (click)="gotoProduct(item.id!)" class="item-thumbnail inline v-top" [ngStyle]="{'background': '#fff url(' + item.imageUrl + ') no-repeat 0 0','backgroundSize': 'contain', 'background-position': 'center'}"></div>
+      <div class="inline v-top">
+      <a routerLink="/p/{{item.id}}">{{item.name}}</a><br /><br />${{item.price}}
+      <br />
+      <br />
+      <div *ngIf="item.selectedVariation">
+        <span class="bold">{{item.variation1Name}}:</span><span>&nbsp;{{item.selectedVariation.split("+")[0]}}</span>
+        <br />
+        <span *ngIf="item.variation2Name" class="bold">{{item.variation2Name}}:</span><span *ngIf="item.variation2Name">&nbsp;{{item.selectedVariation.split("+")[1]}}</span>
+      </div>
+      <br />
+        </div><br />
+        <div class="center-content">
+          <button mat-stroked-button color="primary" click="gotoCart()">Go to cart</button>&nbsp;&nbsp;
+          <button mat-flat-button color="primary" type="button" routerLink="/checkout">Checkout</button>
+        </div>
+    </div>
+  </div>
+</div>

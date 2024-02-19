@@ -1,0 +1,27 @@
+<div class="container-fluid g-0">
+<div class="row justify-content-center">
+  <div class="col-xs-12 col-md-6 login-container">
+    <h1>Login</h1>
+
+    <form #loginForm="ngForm" (keydown.enter)="$event.preventDefault()">
+      <mat-form-field appearance="outline" class="fullfield">
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="email" (ngModelChange)="checkValidForm()" required placeholder="email@example.com" name="email" (keyup.enter)="login()">
+      </mat-form-field><br />
+      <mat-form-field appearance="outline" class="fullfield">
+        <mat-label>Password</mat-label>
+        <input matInput [(ngModel)]="passwordText" (ngModelChange)="checkValidForm()" (keyup.enter)="login()" placeholder="Password" name="password" required [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" (keyup.enter)="login()" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field><br />
+      <span class="warn">{{loginError}}</span><br />
+      <button mat-button type="submit" (click)="login()" color="primary" class="checkout-button" [ngClass]="{'mat-loading' : loggingIn}">
+        <span class="button-text">Login</span>
+        <mat-progress-spinner class="mat-progress-spinner" *ngIf="loggingIn" diameter="20" mode="indeterminate">
+        </mat-progress-spinner>
+      </button>
+    </form>
+  </div>
+</div>
+</div>

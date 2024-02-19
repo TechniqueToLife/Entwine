@@ -1,0 +1,17 @@
+<ul class="category-list-container">
+  <li *ngFor="let c of categories" class="category-link"><a routerLink="/c/{{c.id}}"> {{c.name}}</a></li>
+</ul>
+<div class="col-xs-12 col-md-6 product-list" *ngFor="let p of products">
+  <a routerLink="/p/{{p.id}}"><div class="product-image" [ngStyle]="{'background': '#fff url(' + p.imageUrl + ') no-repeat 0 0','backgroundSize': 'contain', 'background-position': 'center'}"></div></a><br /><br />
+  <a routerLink="/p/{{p.id}}">{{p.name}}</a><br />${{p.price}}<br />
+  <!-- <button mat-button color="primary" (click)="toggleInCart(p)" type="button">
+    {{p.inCart ? 'Update quantity' : 'Add to cart'}}
+    </button> -->
+</div>
+
+<br /><br />
+<div class="col-xs-12" style="text-align:center;">
+  <button [disabled]="allProductsLoaded" mat-button color="primary" (click)="loadAdditionalItems()">
+    {{allProductsLoaded ? 'All items loaded' : 'View more items'}}
+    </button>
+</div>

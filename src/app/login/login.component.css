@@ -1,0 +1,28 @@
+
+
+.reasons-list li {
+  text-align: left;
+  margin: 5px 0;
+}
+
+.full-height-vertical-align {
+  height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.vertical-align {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.error {
+  font-weight: bold;
+  color: #DD0000;
+  font-size: 14px;
+}
+
+.fullfield {
+  width: 240px;
+  max-width: 360px;
+}

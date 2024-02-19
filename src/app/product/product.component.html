@@ -1,0 +1,43 @@
+<div *ngIf="product" class="product-container">
+<div class="current-image">
+  <div *ngIf="loadingImage" class="center-content"><mat-progress-spinner mode="indeterminate" color="primary"></mat-progress-spinner></div>
+  <img [src]="selectedImageUrl" width="100%" [hidden]="loadingImage" (load)="updateLoadStatus()">
+</div>
+<div class="thumbnails-container">
+  <div *ngIf="product.imageUrls && product.imageUrls.length > 1" class="flexbox">
+    <div *ngFor="let url of product.imageUrls" (click)="updateSelectedImage(url)" (mouseenter)="updateSelectedImage(url)">
+      <img src="{{url}}" width="100%">
+    </div>
+  </div>
+</div>
+
+<h2>{{product.name}}</h2>
+<span>{{product.description}}<br />${{product.price}}<br /></span>
+<div class="option-select">
+  <mat-form-field class="full-width-input" *ngIf="product.variation1Name">
+  <mat-label>{{product.variation1Name}}</mat-label>
+    <mat-select [(ngModel)]="selectedVariationOption1" (ngModelChange)="updateSelectedOption()" name="variation 1 options">
+      <mat-option *ngFor="let c of product.variation1Options" [value]="c">{{c}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  &nbsp;&nbsp;
+  <mat-form-field class="full-width-input" *ngIf="product.variation2Name">
+  <mat-label>{{product.variation2Name}}</mat-label>
+    <mat-select [(ngModel)]="selectedVariationOption2" (ngModelChange)="updateSelectedOption()" name="variation 2 options">
+      <mat-option *ngFor="let c of product.variation2Options" [value]="c">{{c}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>
+
+<div #applePayButton id="payment-request-button" class="express-checkout-button">
+  <!-- A Stripe Element will be inserted here. -->
+</div>
+
+<button *ngIf="inStock" [disabled]="product.inCart" mat-stroked-button color="primary" (click)="toggleInCart(product)" type="button">
+  {{product.inCart ? 'Update quantity in cart' : 'Add to cart'}}
+  </button>
+<button *ngIf="!inStock" [disabled]="true" mat-raised-button color="warn" (click)="toggleInCart(product)" type="button">
+  Out of stock
+</button>
+</div>

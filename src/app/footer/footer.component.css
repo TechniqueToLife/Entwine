@@ -1,0 +1,33 @@
+.footer {
+  width: calc(100vw - 20px);
+  padding: 60px 10px;
+}
+
+.footer-left {
+  position: absolute;
+  left: 10px;
+}
+
+.footer-right {
+  position: absolute;
+  right: 10px;
+}
+
+@media (max-width: 560px) {
+  .footer {
+    width: calc(100vw - 8px);
+    padding: 20px 4px;
+  }
+
+  .footer-left {
+    position: relative;
+    text-align: center;
+    width: 100%;
+  }
+
+  .footer-right {
+    position: relative;
+    text-align: center;
+    width: 100%;
+  }
+}

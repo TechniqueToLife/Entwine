@@ -1,0 +1,41 @@
+.product-container {
+  margin: 10px 10px 40px 10px;
+}
+
+.current-image {
+  width: 30vw;
+  display: inline-block;
+}
+
+.thumbnails-container {
+  width: 30vw;
+  display: inline-block;
+  margin-left: 1px;
+}
+
+.option-select {
+  margin-top: 50px;
+}
+
+.flexbox {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  flex-direction: row;
+}
+
+.flexbox > div {
+  display: flex;
+  flex-basis: calc(50% - 20px);
+  justify-content: center;
+  flex-direction: column;
+}
+
+.flexbox > div:hover {
+  cursor: pointer;
+}
+
+.express-checkout-button {
+  display: inline-block;
+  margin-right: 30px;
+}

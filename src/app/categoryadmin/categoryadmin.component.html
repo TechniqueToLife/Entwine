@@ -1,0 +1,45 @@
+<div class="container-fluid admin-main">
+  <div class="row">
+    <div class="col-xs-12 col-md-10 admin-main" *ngIf="currentUser && currentUser.role == 'admin'">
+      <h1>Create category</h1>
+      <form #inputForm="ngForm">
+        <mat-form-field class="full-width-input">
+          <mat-label>Category name</mat-label>
+          <input matInput [(ngModel)]="formData.name" (keydown)="evaluateSubmitStatus()" name="category" placeholder="Category name">
+        </mat-form-field>
+        <br /><br />
+        <mat-form-field class="descbox">
+          <mat-label>Description</mat-label>
+          <textarea matInput [(ngModel)]="formData.description" (keydown)="evaluateSubmitStatus()" name="Description" placeholder="Description"></textarea>
+        </mat-form-field><br /><br />
+        <mat-form-field class="full-width-input">
+          <mat-label>Category ID</mat-label>
+          <input matInput [disabled]="true" [(ngModel)]="formData.id" (keydown)="evaluateSubmitStatus()" name="category id" placeholder="Category ID">
+        </mat-form-field>
+        <br /><br />
+        <div class="col-xs-12 col-md-12 spaced-bottom-border">
+          <h1>Upload category image</h1>
+          <span class="bold secondary"></span><br />
+          <label for="file">Select:</label>
+          <input type="file" (change)="uploadImage($event)" accept=".png,.jpg"/>
+          <mat-progress-spinner color="primary" mode="determinate" [value]="(imageUploadPercent | async)"></mat-progress-spinner>
+        </div>
+        <br /><br />
+        <mat-form-field class="full-width-input">
+        <mat-label>Parent Category</mat-label>
+          <mat-select [(ngModel)]="formData.parentCategory" name="Parent category">
+            <mat-option *ngFor="let c of categories" [value]="c.id">{{c.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <br /><br />
+        <mat-checkbox [(ngModel)]="formData.archived" name="Archived">Archived?</mat-checkbox>
+        <br /><br />
+        <button mat-raised-button color="accent" type="button" (click)="submit()" color="accent" class="checkout-button" [ngClass]="{'mat-loading' : submitting}">
+          <span class="button-text">{{submitText}}</span>
+          <mat-progress-spinner class="mat-progress-spinner" *ngIf="submitting" diameter="20" mode="indeterminate">
+          </mat-progress-spinner>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

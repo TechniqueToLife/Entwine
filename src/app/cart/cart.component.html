@@ -1,0 +1,41 @@
+
+<div class="container-fluid">
+  <div class="row cart-container">
+  <div class="col-xs-12">
+
+<h1>Cart</h1>
+</div>
+<ul class="col-xs-12 col-md-9 equal-height cart-list">
+  <li *ngFor="let item of cart" class="col-xs-12 product-list">
+    <div (click)="gotoProduct(item.id!)" class="item-thumbnail inline v-top" [ngStyle]="{'background': '#fff url(' + item.imageUrl + ') no-repeat 0 0','backgroundSize': 'contain', 'background-position': 'center'}"></div>
+    <div class="inline v-top">
+    <a routerLink="/p/{{item.id}}">{{item.name}}</a><br /><br />${{item.price}}
+    <br />
+    <br />
+    <div *ngIf="item.selectedVariation">
+      <span class="bold">{{item.variation1Name}}:</span><span>&nbsp;{{item.selectedVariation.split("+")[0]}}</span>
+      <br />
+      <span *ngIf="item.variation2Name" class="bold">{{item.variation2Name}}:</span><span *ngIf="item.variation2Name">&nbsp;{{item.selectedVariation.split("+")[1]}}</span>
+    </div>
+    Quantity:&nbsp;&nbsp;<div class="quantity-picker-container">
+      <button class="decrease-quantity-button" (click)="updateQuantity(item, -1)">-</button>
+      <div class="quantity-count">{{item.cartQuantity}}</div>
+      <button class="increase-quantity-button" (click)="updateQuantity(item, 1)">+</button>
+    </div>
+    <br /><br />
+    <span *ngIf="item.cartNote"><mat-icon style="color:red">warning</mat-icon>&nbsp;{{item.cartNote}}</span>
+    <br />
+    <button mat-button color="warn" type="button" (click)="removeItem(item)">Remove</button>
+    <!-- <button mat-button type="button" color="primary">
+      {{item.inCart ? 'Remove from bag' : 'Add to bag'}}
+      </button> -->
+      <br /><br /><br />
+      </div>
+  </li>
+
+</ul>
+<div class="col-xs-12 cart-info"><span class="total">Cart total: ${{cartTotal.toFixed(2)}}</span>
+<button mat-raised-button color="accent" type="button" [disabled]="!checkoutEnabled" routerLink="/checkout">Checkout</button>
+</div>
+</div>
+</div>

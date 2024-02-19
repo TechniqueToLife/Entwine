@@ -1,0 +1,91 @@
+.cart-preview-container {
+  padding: 40px 10px;
+}
+.cart-container {
+  padding: 0 10px;
+}
+
+.cart-list {
+  margin-top: 20px;
+}
+
+.quantity-picker-container {
+  height: 30px;
+  border-radius: 15px;
+  background-color: #DEDEDE;
+  width: 90px;
+  /* vertical-align: middle; */
+  line-height: 30px;
+  text-align: center;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.quantity-picker-container > button {
+  background: none;
+  border: none;
+  outline: none;
+  display: inline-block;
+  margin: 0;
+  /* vertical-align: middle; */
+}
+
+.decrease-quantity-button {
+  float: left;
+  width: 33%;
+}
+
+.increase-quantity-button {
+  float: right;
+  width: 33%;
+}
+
+.quantity-count {
+  display: inline-block;
+  width: 33%;
+}
+
+.cart-info {
+  margin-top: 100px;
+  padding-left: 80px;
+}
+
+span.total {
+  margin-right: 40px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+
+.item-thumbnail {
+  border: 1px solid #EFEFEF;
+  border-radius: 7px;
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+}
+
+.item-thumbnail:hover {
+  cursor: pointer;
+}
+
+#form-field {
+  margin-left: 30px;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.storeitem {
+  list-style: none;
+  margin-bottom: 25px;
+}
+.v-middle {
+  vertical-align: middle;
+}
+
+.v-top {
+  vertical-align: top;
+}

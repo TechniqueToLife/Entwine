@@ -1,0 +1,18 @@
+<div *ngIf="!purchase" class="center-content"><mat-progress-spinner mode="indeterminate" color="primary"></mat-progress-spinner></div>
+<div class="center-content" *ngIf="purchase && purchase.id && purchase.id.length != 0">
+  <h1>Thank you for your order</h1>
+  <b>Order: {{purchase.id}}</b>
+  <h3>Order total: ${{(purchase.total * 0.01).toFixed(2)}}</h3>
+  <h3>Items ordered:</h3>
+  <div *ngIf="!itemsLoaded" class="center-content"><mat-progress-spinner mode="indeterminate" color="primary"></mat-progress-spinner></div>
+  <ul *ngIf="itemsLoaded" class="cart-items">
+    <li *ngFor="let i of items">
+      <a routerLink="/p/{{i.id}}">{{i.name}}</a>
+    </li>
+  </ul>
+  <br /><br />
+  <br /><br />
+  <a routerLink="/o/{{purchase.id}}">View complete order details</a>
+  <br /><br />
+  <a routerLink="/orderlookup">View your order history</a>
+</div>
