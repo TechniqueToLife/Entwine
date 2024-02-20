@@ -136,7 +136,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           return
         }
 
-        this.http.post("https://romebeats.com/stripeapi/createcustomer.php", "userId="+newUser.user!.uid+"&email="+newUser.user!.email!.toLowerCase(), httpOptions).subscribe((res : any) => {
+        this.http.post("https://STRIPESERVER/createcustomer.php", "userId="+newUser.user!.uid+"&email="+newUser.user!.email!.toLowerCase(), httpOptions).subscribe((res : any) => {
           if(res["error"]) {
             this.registering = false;
             this.displayError("Error Registering User", "Dismiss");

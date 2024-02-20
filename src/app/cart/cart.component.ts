@@ -31,9 +31,7 @@ export class CartComponent implements OnInit {
   constructor(firestore: AngularFirestore, public extensions : Extensions, private userConnect : UserConnect,
   private login : LoginService, private globals : Globals, private router : Router, private _snackBar: MatSnackBar, private dialog : MatDialog) {
       this.databaseRef = firestore;
-      console.log("updateInAdmin");
       this.login.updateInAdmin(false);
-      console.log("updateInAdmin2");
 
       this.login.currentUserObservable.subscribe(u => {
           this.currentUser = u;

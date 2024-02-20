@@ -100,10 +100,10 @@ export class OrderComponent implements OnInit {
     }
 
     fetchCustomerData() {
-      this.http.post("https://romebeats.com/stripeapi/retrievepaymentintent.php", "intent_id=" + this.order.invoiceId, httpOptions).subscribe((productData : any) => {
+      this.http.post("https://STRIPESERVER/retrievepaymentintent.php", "intent_id=" + this.order.invoiceId, httpOptions).subscribe((productData : any) => {
         console.log('result %o', productData);
 
-        this.http.post("https://romebeats.com/stripeapi/retrievepaymentmethod.php", "id=" + productData["payment_method"], httpOptions).subscribe((productData2 : any) => {
+        this.http.post("https://STRIPESERVER/retrievepaymentmethod.php", "id=" + productData["payment_method"], httpOptions).subscribe((productData2 : any) => {
           console.log('result %o', productData2);
           let card = productData2["card"];
           console.log("CARD " + card);

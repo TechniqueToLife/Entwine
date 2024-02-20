@@ -242,7 +242,7 @@ export class CheckoutComponent implements OnInit {
       this.paymentMethodsLoaded = false;
       console.log(this.currentUser);
       if(this.currentUser!.stripeId) {
-        this.http.post("https://romebeats.com/stripeapi/fetchpaymentmethods.php", "customerId="+this.currentUser!.stripeId, httpOptions).subscribe((res : any) => {
+        this.http.post("https://STRIPESERVER/fetchpaymentmethods.php", "customerId="+this.currentUser!.stripeId, httpOptions).subscribe((res : any) => {
           this.paymentMethodsLoaded = true;
           console.log('post result %o', res);
 
@@ -282,7 +282,7 @@ export class CheckoutComponent implements OnInit {
       console.log(id);
       this.itemsLoaded = false;
       let items = this.items.filter(i => i.priceId == id);
-        this.http.post("https://romebeats.com/stripeapi/retrieveprice.php", "id=" + id, httpOptions).subscribe((res : any) => {
+        this.http.post("https://STRIPESERVER/retrieveprice.php", "id=" + id, httpOptions).subscribe((res : any) => {
           console.log(res);
           console.log(res["unit_amount"]);
           for(let item of items) {
@@ -312,7 +312,7 @@ export class CheckoutComponent implements OnInit {
 
         console.log(item);
 
-        this.http.post("https://romebeats.com/stripeapi/retrieveproduct.php", "id=" + item.stripeProductId, httpOptions).subscribe((productData : any) => {
+        this.http.post("https://STRIPESERVER/retrieveproduct.php", "id=" + item.stripeProductId, httpOptions).subscribe((productData : any) => {
           console.log('product result %o', productData);
           // item.description = productData["description"];
           item.name = productData["name"];
@@ -330,7 +330,7 @@ export class CheckoutComponent implements OnInit {
 
 
     ngAfterViewInit() {
-      this.stripe = Stripe('pk_test_51MWSs5GtNOqBqiTcYHTRyv8RfyS68dLtcZYFAQ2wLdoaW9YMmIgtarDHWHgKpNp87fcRjlbK6rlLHonHlsu0vXap00DLR1d2KE');
+      this.stripe = Stripe('STRIPE_KEY');
       this.elements = this.stripe.elements();
       this.initiateCardElement();
     }
@@ -436,7 +436,7 @@ export class CheckoutComponent implements OnInit {
         paymentRequest.on('paymentmethod', async (ev : any) => {
           let orderId = this.databaseRef.firestore.collection('purchaseHistory').doc().id;
           let chargeAmount = this.total + this.shippingTotal;
-          this.http.post("https://romebeats.com/stripeapi/walletpaymentintent.php", "customerId="+this.currentUser!.stripeId+"&amount="+chargeAmount+"&description="+orderId+"&metadata="+productIds+"&receiptEmail="+ev["payerEmail"], httpOptions).subscribe(async (res : any)=> {
+          this.http.post("https://STRIPESERVER/walletpaymentintent.php", "customerId="+this.currentUser!.stripeId+"&amount="+chargeAmount+"&description="+orderId+"&metadata="+productIds+"&receiptEmail="+ev["payerEmail"], httpOptions).subscribe(async (res : any)=> {
             console.log(res);
             console.log(ev);
             console.log(ev["payerEmail"]);
@@ -549,7 +549,7 @@ export class CheckoutComponent implements OnInit {
       let orderId = this.databaseRef.firestore.collection('purchaseHistory').doc().id;
       let chargeAmount = this.total + this.shippingTotal;
       console.log(chargeAmount);
-      this.http.post("https://romebeats.com/stripeapi/paymentintent.php", "customerId="+this.currentUser!.stripeId+"&amount="+chargeAmount+"&paymentMethod="+this.selectedCard+"&description="+orderId+"&metadata="+productIds+"&receiptEmail="+this.emailText, httpOptions).subscribe((res : any)=> {
+      this.http.post("https://STRIPESERVER/paymentintent.php", "customerId="+this.currentUser!.stripeId+"&amount="+chargeAmount+"&paymentMethod="+this.selectedCard+"&description="+orderId+"&metadata="+productIds+"&receiptEmail="+this.emailText, httpOptions).subscribe((res : any)=> {
         console.log(this.total + this.shippingTotal);
         console.log(this.total);
         console.log('post result %o', res);
@@ -680,7 +680,7 @@ export class CheckoutComponent implements OnInit {
 
     deleteCard(input : Card) {
       console.log(input.id);
-      this.http.post("https://romebeats.com/stripeapi/detachpaymentmethod.php", "customerId="+this.currentUser!.stripeId+"&paymentMethodId="+input.id, httpOptions).subscribe((res : any) => {
+      this.http.post("https://STRIPESERVER/detachpaymentmethod.php", "customerId="+this.currentUser!.stripeId+"&paymentMethodId="+input.id, httpOptions).subscribe((res : any) => {
         console.log('post result %o', res);
 
         if(res["error"]) {
@@ -701,7 +701,7 @@ export class CheckoutComponent implements OnInit {
         if(this.currentUser!.stripeId != undefined) {
           console.log("this.selectedCard " + this.selectedCard);
 
-          this.http.post("https://romebeats.com/stripeapi/attachpaymentmethod.php", "customerId="+this.currentUser!.stripeId+"&paymentMethodId="+this.selectedCard, httpOptions).subscribe((res : any) => {
+          this.http.post("https://STRIPESERVER/attachpaymentmethod.php", "customerId="+this.currentUser!.stripeId+"&paymentMethodId="+this.selectedCard, httpOptions).subscribe((res : any) => {
             console.log('post result %o', res);
 
               if(res["error"]) {

@@ -110,7 +110,7 @@ export class ProductComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.stripe = Stripe('pk_test_51MWSs5GtNOqBqiTcYHTRyv8RfyS68dLtcZYFAQ2wLdoaW9YMmIgtarDHWHgKpNp87fcRjlbK6rlLHonHlsu0vXap00DLR1d2KE');
+    this.stripe = Stripe('STRIPE_KEY');
     this.elements = this.stripe.elements();
   }
 
@@ -327,7 +327,7 @@ export class ProductComponent implements OnInit, AfterViewInit {
         paymentRequest.on('paymentmethod', async (ev : any) => {
           let orderId = this.databaseRef.firestore.collection('purchaseHistory').doc().id;
           let chargeAmount = this.total + this.shippingTotal;
-          this.http.post("https://romebeats.com/stripeapi/walletpaymentintent.php", "customerId="+this.currentUser!.stripeId+"&amount="+chargeAmount+"&description="+orderId+"&metadata="+productIds+"&receiptEmail="+ev["payerEmail"], httpOptions).subscribe(async (res : any)=> {
+          this.http.post("https://STRIPESERVER/walletpaymentintent.php", "customerId="+this.currentUser!.stripeId+"&amount="+chargeAmount+"&description="+orderId+"&metadata="+productIds+"&receiptEmail="+ev["payerEmail"], httpOptions).subscribe(async (res : any)=> {
             console.log(res);
             console.log(ev);
             console.log(ev["payerEmail"]);

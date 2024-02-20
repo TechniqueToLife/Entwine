@@ -139,10 +139,10 @@ export class OrderadminComponent implements OnInit, OnDestroy {
   }
 
   fetchCustomerData() {
-    this.http.post("https://romebeats.com/stripeapi/retrievepaymentintent.php", "intent_id=" + this.order.invoiceId, httpOptions).subscribe((productData : any) => {
+    this.http.post("https://STRIPESERVER/retrievepaymentintent.php", "intent_id=" + this.order.invoiceId, httpOptions).subscribe((productData : any) => {
       console.log('result %o', productData);
 
-      this.http.post("https://romebeats.com/stripeapi/retrievepaymentmethod.php", "id=" + productData["payment_method"], httpOptions).subscribe((productData2 : any) => {
+      this.http.post("https://STRIPESERVER/retrievepaymentmethod.php", "id=" + productData["payment_method"], httpOptions).subscribe((productData2 : any) => {
         console.log('result %o', productData2);
         let card = productData2["card"];
         console.log("CARD " + card);
@@ -237,7 +237,7 @@ export class OrderadminComponent implements OnInit, OnDestroy {
       //Replace possible "&" and / symbols that break the post request since they are used to add vars or JSON decoded
       let jsonData = JSON.stringify(itemsData);
       console.log(jsonData);
-          this.http.post("https://romebeats.com/stripeapi/trackingnumberupdate.php", "data=" + jsonData + "&first_name="+this.order.firstName + "&email="+this.order.email +"&order_number="+this.order.id, httpOptions).subscribe((res : any) => {
+          this.http.post("https://STRIPESERVER/trackingnumberupdate.php", "data=" + jsonData + "&first_name="+this.order.firstName + "&email="+this.order.email +"&order_number="+this.order.id, httpOptions).subscribe((res : any) => {
             console.log(res);
             this.dialog.closeAll();
           });
@@ -275,7 +275,7 @@ export class OrderadminComponent implements OnInit, OnDestroy {
     console.log(amountstring);
 
 
-    this.http.post("https://romebeats.com/stripeapi/refund.php", "payment_intent_id=" + this.order.invoiceId + "&amount="+ amount, httpOptions).subscribe((res : any) => {
+    this.http.post("https://STRIPESERVER/refund.php", "payment_intent_id=" + this.order.invoiceId + "&amount="+ amount, httpOptions).subscribe((res : any) => {
       console.log(res);
       if(res["status"] == "succeeded") {
         this.displayMessage("Order refunded", "Dismiss");
@@ -293,7 +293,7 @@ export class OrderadminComponent implements OnInit, OnDestroy {
           this.displayError("Error updating order, order was refunded", "Dismiss");
         });
         let amountstring = (amount * 0.01).toFixed(2);
-        this.http.post("https://romebeats.com/stripeapi/refundemail.php", "ordernumber=" + this.order.id + "&first_name=" + this.order.firstName + "&email=" + this.order.email + "&amount=$" + amountstring, httpOptions).subscribe((productData : any) => {
+        this.http.post("https://STRIPESERVER/refundemail.php", "ordernumber=" + this.order.id + "&first_name=" + this.order.firstName + "&email=" + this.order.email + "&amount=$" + amountstring, httpOptions).subscribe((productData : any) => {
           console.log('result %o', productData);
 
         });

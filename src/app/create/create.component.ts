@@ -240,13 +240,13 @@ export class CreateComponent implements OnInit, OnDestroy {
     this.formData.quantity = +this.formData.quantity;
     if(!this.productId) {
 
-        this.http.post("https://romebeats.com/stripeapi/createproduct.php", "name="+this.formData.name+"&description="+this.formData.description+"&id="+this.formData.id+"&shippable="+!this.formData.digital+"&images="+this.formData.imageUrl+"&fileUrl="+this.formData.fileUrl, httpOptions).subscribe((res : any) => {
+        this.http.post("https://STRIPESERVER/createproduct.php", "name="+this.formData.name+"&description="+this.formData.description+"&id="+this.formData.id+"&shippable="+!this.formData.digital+"&images="+this.formData.imageUrl+"&fileUrl="+this.formData.fileUrl, httpOptions).subscribe((res : any) => {
           console.log(res);
           if(res["error"]) {
             this.displayError("Error submitting product", "Dismiss");
             return
           }
-          this.http.post("https://romebeats.com/stripeapi/createprice.php", "price="+price+"&currency="+"usd"+"&productId="+res["id"], httpOptions).subscribe((priceRes : any) => {
+          this.http.post("https://STRIPESERVER/createprice.php", "price="+price+"&currency="+"usd"+"&productId="+res["id"], httpOptions).subscribe((priceRes : any) => {
             if(priceRes["error"]) {
               this.displayError("Error submitting product", "Dismiss");
               return
@@ -268,7 +268,7 @@ export class CreateComponent implements OnInit, OnDestroy {
       })
 
     } else {
-      this.http.post("https://romebeats.com/stripeapi/updateproduct.php", "name="+this.formData.name+"&description="+this.formData.description+"&id="+this.formData.stripeProductId+"&shippable="+!this.formData.digital, httpOptions).subscribe((res : any) => {
+      this.http.post("https://STRIPESERVER/updateproduct.php", "name="+this.formData.name+"&description="+this.formData.description+"&id="+this.formData.stripeProductId+"&shippable="+!this.formData.digital, httpOptions).subscribe((res : any) => {
         console.log(res);
         if(res["error"]) {
           this.displayError("Error updating product", "Dismiss");
@@ -278,7 +278,7 @@ export class CreateComponent implements OnInit, OnDestroy {
         //Only update price if needed, since it create a new price object in Stripe. Since we can not update an existing price object
         if(this.originalProduct && this.originalProduct.price != this.formData.price) {
 
-            this.http.post("https://romebeats.com/stripeapi/createprice.php", "price="+price+"&currency="+"usd"+"&productId="+this.formData.stripeProductId, httpOptions).subscribe((priceRes : any) => {
+            this.http.post("https://STRIPESERVER/createprice.php", "price="+price+"&currency="+"usd"+"&productId="+this.formData.stripeProductId, httpOptions).subscribe((priceRes : any) => {
               if(priceRes["error"]) {
                 this.displayError("Error updating product", "Dismiss");
                 return
@@ -382,7 +382,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     console.log(this.formData.variationQuantities);
     let variationQuantities = {} as any;
     this.formData.variationQuantities = variationQuantities;
-    
+
     this.updateVariationQuantity();
 
     let formDataVars = this.variationQuantities as Map<string, string>;
