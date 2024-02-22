@@ -49,7 +49,7 @@ AngularJS, Stripe payments, Firebase Firestore database + authentication, Mailje
 
 
 
-There are many features to this web app, but this is showcasing the basic functionality
+There are many features to this web app, this showcases the basic functionality
 
 <b>Some additional features:</b>
 
