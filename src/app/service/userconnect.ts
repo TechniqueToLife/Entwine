@@ -335,7 +335,7 @@ export class UserConnect {
     });
   }
 
-  fetchAllProduct(limit : number = 10, featured : boolean = false, startFrom? : firebase.default.firestore.DocumentData) : Promise<Product[]> {
+  fetchAllProduct(limit : number = 10, featured : boolean = false, includeArchived : boolean = true , startFrom? : firebase.default.firestore.DocumentData) : Promise<Product[]> {
     return new Promise((resolve, reject) => {
       let products : Product[] = [];
       setTimeout(() => {
@@ -343,6 +343,12 @@ export class UserConnect {
           if(featured) {
             productRef = productRef.where("featured" , "==", true)
           }
+
+          if(!includeArchived) {
+            productRef = productRef.where("archived" , "==", false);
+            console.log("Exclude archived");
+          }
+
           if(startFrom) {
             productRef = productRef.startAfter(startFrom);
           }

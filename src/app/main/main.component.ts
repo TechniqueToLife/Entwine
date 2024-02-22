@@ -44,7 +44,7 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userConnect.fetchAllProduct(this.amountToLoad, true).then(p => {
+    this.userConnect.fetchAllProduct(this.amountToLoad, true, false).then(p => {
       for(let item of p) {
         if(this.bag.find(b => b.id == item.id)) {
           item.inCart = true;
@@ -82,7 +82,7 @@ export class MainComponent implements OnInit {
   }
 
   loadAdditionalItems() {
-    this.userConnect.fetchAllProduct(this.amountToLoad, true, this.products[this.products.length - 1].document).then(p => {
+    this.userConnect.fetchAllProduct(this.amountToLoad, true, false, this.products[this.products.length - 1].document).then(p => {
       for(let item of p) {
         if(this.bag.find(b => b.id == item.id)) {
           item.inCart = true;
